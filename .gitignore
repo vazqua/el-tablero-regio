@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.pnp.*
+
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Build and test output
+dist/
+coverage/
+test-results/
+playwright-report/
+*.tsbuildinfo
+
+# Local research and design scratch material
+references-and-context/
+
+# Logs and OS/editor files
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

@@ -1,0 +1,37 @@
+.escudo, .estandarte { display: block; flex-shrink: 0; overflow: visible; }
+.company-crest { display: block; flex-shrink: 0; }
+.company-card-top:has(.company-crest) { height: 108px; }
+.house-motto-block { min-width: 0; margin: 0 0 18px; overflow-wrap: anywhere; }
+.house-motto { font: 400 24px/1.3 var(--font-display); color: var(--color-ink); margin: 0 0 6px; }
+.company-card .house-motto { color: var(--color-accent); }
+.house-motto-translation, .house-motto-original { font: 400 13px/1.5 var(--font-body); color: var(--color-ink-soft); margin: 0; }
+.house-motto-original { margin-top: 10px; }
+.house-motto-original > span { font-weight: 700; }
+.detail-banner:has(.detail-crest) { align-items: center; gap: 14px; }
+.detail-crest { display: block; flex-shrink: 0; }
+.rank-name > .escudo { margin-right: 1px; }
+.company-link > .escudo { flex-shrink: 0; }
+.territory-standard, .bastion-standard { pointer-events: none; }
+.territory-standard { z-index: 2; }
+.territory-standard .estandarte, .bastion-standard .estandarte { transform-origin: 10% 100%; animation: plantar-estandarte 150ms ease-out both; }
+.territory-tooltip-body { display: flex; align-items: center; gap: 10px; }
+.territory-tooltip-body > div:last-child { min-width: 0; overflow-wrap: anywhere; }
+.bastion-icon { flex-shrink: 0; vertical-align: middle; }
+.detail-sheet h3:has(.bastion-icon) { display: flex; align-items: center; gap: 7px; }
+@keyframes plantar-estandarte { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@media (prefers-reduced-motion: reduce) { .territory-standard .estandarte, .bastion-standard .estandarte { animation: none; } }
+.armorial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 26px; }
+.armorial-card { min-width: 0; border: 3px solid var(--color-border); background: var(--color-surface); padding: 20px; box-shadow: 4px 4px 0 var(--color-border); }
+.armorial-card > header { display: flex; justify-content: space-between; align-items: center; }
+.armorial-card > header a { display: grid; place-items: center; width: 32px; height: 32px; color: var(--color-ink); }
+.armorial-card > header a:hover { color: var(--color-highlight); }
+.armorial-card h3 { font: 400 28px/1.2 var(--font-display); margin: 16px 0; min-height: 68px; overflow-wrap: anywhere; }
+.shield-sizes { display: grid; grid-template-columns: 1fr 1fr 2fr; align-items: end; gap: 12px; min-height: 162px; padding-bottom: 18px; border-bottom: 2px solid var(--color-border); margin-bottom: 18px; }
+.armorial-card figure { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 12px; margin: 0; }
+.armorial-card figcaption { font: 400 11px/1.4 var(--font-body); }
+.armorial-card .house-motto-block { margin-bottom: 18px; }
+.blazon-description { font-size: 11px; text-transform: uppercase; color: var(--color-ink-soft); margin: 0 0 18px; }
+.armorial-variants { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; border-top: 2px solid var(--color-border); padding-top: 18px; }
+.armorial-variants figure { min-height: 132px; padding: 12px; }
+.mono-sample { background: var(--faction); color: var(--tinta-casa); }
+@media (max-width: 700px) { .detail-crest .escudo { width: 96px; height: 120px; } }

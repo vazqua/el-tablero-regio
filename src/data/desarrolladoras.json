@@ -1,0 +1,100 @@
+[
+  {
+    "id": "gm-desarrollos",
+    "nombre": "GM Desarrollos",
+    "representante": "Marco Antonio Garza Mercado y Benjamin Garza Mercado",
+    "color": "#E6194B",
+    "descripcion": "La casa reinante de Valle Oriente. Bajo los hermanos Garza Mercado, esta facción construyó su fortuna con plazas comerciales clásicas (Fiesta San Agustín, Fiesta Anáhuac) y hoy corona su imperio con Distrito Armida, un megadistrito vertical de 600 mil m². Manda con mano firme el corazón de San Pedro."
+  },
+  {
+    "id": "idei",
+    "nombre": "IDEI (Internacional de Inversiones)",
+    "representante": "Grupo de industriales regiomontanos",
+    "color": "#3CB44B",
+    "descripcion": "Los señores del cielo. Con medio siglo de trayectoria, IDEI levantó los rascacielos que definieron el skyline: Torre Avalanz primero y luego la mítica Torre KOI, la más alta de México por tres años. Su reino es la verticalidad de lujo en Valle Oriente y Valle del Campestre, con firmas como Foster + Partners en su nómina."
+  },
+  {
+    "id": "grupo-acosta-verde",
+    "nombre": "Grupo Acosta Verde",
+    "representante": "Jesús Acosta Verde (fundador)",
+    "color": "#4363D8",
+    "descripcion": "El imperio de las plazas comunitarias. Nacido en Monterrey en 1970, Acosta Verde inventó el formato Sendero: malls accesibles anclados por Soriana para las clases populares y medias. Cotiza en la BMV bajo la clave GAV. No pelea por San Pedro; su territorio son los municipios periféricos, donde sus plazas son el punto de reunión del barrio."
+  },
+  {
+    "id": "finsa",
+    "nombre": "FINSA",
+    "representante": "Sergio Argüelles (presidente y CEO)",
+    "color": "#F58231",
+    "descripcion": "El general del suelo industrial. Con casi medio siglo de historia, FINSA domina el negocio de las naves y parques industriales, la savia económica del área metropolitana. Sus feudos son los corredores de Apodaca, Guadalupe y Santa Catarina, donde decenas de fábricas globales operan bajo su bandera."
+  },
+  {
+    "id": "gp-vivienda",
+    "nombre": "GP Vivienda (Grupo Garza Ponce)",
+    "representante": "Familia Garza Ponce",
+    "color": "#911EB4",
+    "descripcion": "La rama habitacional del histórico Grupo Garza Ponce, constructor desde 1966. GP Vivienda hace vivienda media para la familia regia trabajadora, y su ejército de fraccionamientos cubre casi todos los flancos: Apodaca, Escobedo, García, Guadalupe y la zona Cumbres. Territorio amplio y disperso, típico de una casa que juega a la conquista horizontal."
+  },
+  {
+    "id": "grupo-javer",
+    "nombre": "Grupo Javer",
+    "representante": "Casas Javer (fundada 1973; hoy parte de VINTE)",
+    "color": "#F032E6",
+    "descripcion": "El rey del volumen. Desde 1973, Javer es el mayor desarrollador de vivienda de México y el gran proveedor de crédito Infonavit. Su especialidad son los macrofraccionamientos como Valle de Lincoln en García. Domina por cantidad los frentes de expansión. Desde diciembre de 2024 es parte del grupo VINTE."
+  },
+  {
+    "id": "ruba",
+    "nombre": "Ruba",
+    "representante": "Ruba Residencial (origen Chihuahua)",
+    "color": "#42D4F4",
+    "descripcion": "La invasora del norte. Ruba, desarrolladora con raíces en Chihuahua y más de cuatro décadas de oficio, entró con fuerza al área metropolitana con vivienda media en cerradas. Sus dominios están en el frente joven: Escobedo, la zona Cumbres-García y Apodaca. Facción sólida pero con parte de su portafolio documentado en portales más que en fuentes propias."
+  },
+  {
+    "id": "vidusa",
+    "nombre": "Vidusa",
+    "representante": "Vidusa (Vivienda de Calidad)",
+    "color": "#BFEF45",
+    "descripcion": "La casa de la vivienda accesible en el norte popular. Con más de 48 años y 88 mil viviendas construidas, Vidusa mueve volumen en los municipios de mayor crecimiento: García, Apodaca, Escobedo y Guadalupe. Nombra sus fraccionamientos con etiquetas cortas y elegantes (Adara, Alcázar, Marquesa) que esconden un modelo de producción masiva."
+  },
+  {
+    "id": "grupo-sadasi",
+    "nombre": "Grupo Sadasi",
+    "representante": "Grupo Sadasi (fundado 1975)",
+    "color": "#469990",
+    "descripcion": "El gigante nacional de la vivienda que también pelea NL. Sadasi, líder mexicano desde 1975, despliega en Nuevo León su marca de macrofraccionamientos: la línea Los Héroes de interés social y desarrollos de media como Cumbres del Lago. Su territorio es el extremo periférico, donde la vivienda accesible se produce por miles."
+  },
+  {
+    "id": "proyectos-9",
+    "nombre": "Proyectos 9",
+    "representante": "Proyectos 9 (con Altio Capital en algunos desarrollos)",
+    "color": "#9A6324",
+    "descripcion": "Los regeneradores del Centro. Proyectos 9 es la casa detrás de Pabellón M, el coloso que revivió el corazón de Monterrey, y del Corredor MOCA sobre Av. Ocampo. Su cruzada es densificar y revitalizar el Centro con usos mixtos de altura, un frente que casi nadie más se atreve a disputar con tanta ambición."
+  },
+  {
+    "id": "dm-desarrolladora",
+    "nombre": "DM Desarrolladora de Proyectos",
+    "representante": "DM Desarrolladora (con VISA Desarrollos en Punto Valle)",
+    "color": "#800000",
+    "descripcion": "La casa del lujo y la vivienda vertical diversificada. DM saltó a la fama con Punto Valle, el town center premium de San Pedro. Fuera de ahí despliega torres residenciales por Monterrey: La Rioja, Mitras Norte, Miravalle. Facción versátil que combina retail de alto nivel con departamentos en varias zonas."
+  },
+  {
+    "id": "gim",
+    "nombre": "Grupo Inmobiliario Monterrey (GIM)",
+    "representante": "Eudelio Garza Mercado",
+    "color": "#000075",
+    "descripcion": "Los urbanistas de la ciudad dentro de la ciudad. Con más de 40 años, GIM domina el retail premium de San Pedro (Fashion Drive, Main Entrance) y ahora lanza su doble ofensiva: Canadá City Center en Escobedo y Sultana en Valle Oriente, una torre proyectada a 330 m. Ojo: es una familia Garza Mercado distinta a la de GM Desarrollos."
+  },
+  {
+    "id": "altea-desarrollos",
+    "nombre": "Altea Desarrollos",
+    "representante": "Francisco A. González (Grupo Multimedios)",
+    "color": "#C2185B",
+    "descripcion": "El brazo inmobiliario de Grupo Multimedios, nacido en 2007 y ya con más de 30 plazas a escala nacional. En Nuevo León su bandera es Paseo La Fe, lifestyle mall premiado que reordenó el corredor Miguel Alemán. Manda en San Nicolás y Apodaca con formatos que van del fashion mall al power center, y últimamente también le entra a las naves industriales."
+  },
+  {
+    "id": "u-calli",
+    "nombre": "U-Calli",
+    "representante": "Antonio Elosúa Muguerza y Xavier Toussaint Elosúa (fundadores, 1973)",
+    "color": "#FFC300",
+    "descripcion": "Los arquitectos del territorio. Fundada en 1973, U-Calli no construyó edificios en Valle Oriente: diseñó y promovió la zona entera desde 1989 por encargo de Lamosa, y luego la llenó con su Parque Corporativo y Galerías Valle Oriente. Medio siglo después sigue expandiéndose con torres de lujo, usos mixtos en San Jerónimo y casas en Escobedo. Si el mapa tuviera una casa fundadora, sería esta."
+  }
+]
