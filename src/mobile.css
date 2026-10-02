@@ -68,7 +68,7 @@
   .detail-description, .address p, .location-line, .developments-list button { font-size: 14px; }
   .developments-list small, .company-fullname { font-size: 12px; }
   .locate-button, .back-map { min-height: 44px; font-size: 13px; }
-  .castillo-ficha { max-height: 160px; }
+  .castillo-ficha { width: min(100%, 160px); max-height: 160px; }
   .detail-banner:has(+ h2.house-name) .escudo { width: 48px; height: 60px; }
   .has-detail .search-box, .has-detail .map-tools, .has-detail .mobile-ranking { display: none; }
   .map-stage:has(.detail-sheet.is-expanded) .influence-control { display: none; }

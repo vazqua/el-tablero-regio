@@ -14,11 +14,13 @@ import { Estandarte } from './escudo/Escudo';
 import Castillo from './castillos/Castillo';
 import { centroEstandarte } from './escudo/centroEstandarte';
 import { posicionarTooltip } from './escudo/posicionarTooltip';
+import { vistaMetropolitana } from '../lib/vistaMapa';
 setWorkerUrl(workerUrl);
 
 interface Props {
   resultado: ResultadoTerritorios | null; desarrollos: Desarrollo[]; desarrolladoras: Desarrolladora[];
   empresaActiva: string | null; desarrolloActivo: string | null; marcadoresVisibles: boolean; modoEdicion: boolean;
+  bastionesDestacados: ReadonlySet<string> | null;
   onReady: (map: MapLibreMap) => void; onDesarrollo: (id: string) => void;
 }
 function rayas() {
@@ -65,13 +67,15 @@ export default function Mapa(props: Props) {
             { id: 'base', type: 'raster', source: 'base', paint: { 'raster-saturation': -1, 'raster-contrast': -0.15, 'raster-brightness-min': 0.22, 'raster-opacity': 0.88 } },
           ],
         },
-        center: [-100.30, 25.75], zoom: window.innerWidth <= 900 ? 9.75 : 10.55,
+        ...vistaMetropolitana(window.innerWidth <= 900),
         minZoom: 8, maxZoom: 18, maxBounds: [[-101.1, 25.15], [-99.6, 26.35]],
         canvasContextAttributes: { preserveDrawingBuffer: true },
         locale: { 'Map.Title': 'Mapa de dominios de Monterrey', 'AttributionControl.ToggleAttribution': 'Créditos del mapa' },
       });
     } catch { setError('No se pudo iniciar el mapa. Revisa que WebGL esté disponible.'); return; }
     mapa.current = map;
+    const inclinacion = () => contenedor.current?.setAttribute('data-pitch', map.getPitch().toFixed(1));
+    inclinacion(); map.on('pitch', inclinacion);
     map.on('error', e => {
       if ('sourceId' in e && e.sourceId === 'base') setError('El mapa base no está disponible. Los territorios siguen en juego.');
       else { console.error(e.error); setError('No se pudo dibujar una parte del mapa. Recarga para volver a intentarlo.'); }
@@ -247,11 +251,14 @@ export default function Mapa(props: Props) {
   useEffect(() => {
     marcadores.current.forEach(({ id, elemento, marcador }) => {
       elemento.classList.toggle('is-selected', id === props.desarrolloActivo);
-      const atenuado = Boolean(props.empresaActiva && props.desarrollos.find(d => d.id === id)?.desarrolladora !== props.empresaActiva);
+      const coincide = props.bastionesDestacados?.has(id) ?? true;
+      const otraCasa = Boolean(props.empresaActiva && props.desarrollos.find(d => d.id === id)?.desarrolladora !== props.empresaActiva);
+      const atenuado = id !== props.desarrolloActivo && (!coincide || otraCasa);
       elemento.classList.toggle('is-dimmed', atenuado);
+      elemento.classList.toggle('is-highlighted', Boolean(props.bastionesDestacados && coincide && !otraCasa));
       marcador.setOpacity(atenuado ? 0.24 : 1);
       elemento.hidden = !props.marcadoresVisibles;
     });
-  }, [listo, props.marcadoresVisibles, props.desarrolloActivo, props.empresaActiva, props.desarrollos]);
+  }, [listo, props.marcadoresVisibles, props.desarrolloActivo, props.empresaActiva, props.desarrollos, props.bastionesDestacados]);
   return <><div ref={contenedor} className="mapa" aria-label="Mapa de territorios de Monterrey" />{error && <p className="aviso-mapa" role="status">{error}</p>}</>;
 }
