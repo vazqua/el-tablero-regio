@@ -1,6 +1,8 @@
-# Dominio MTY
+# El Tablero Regio
 
 Mapa interactivo del dominio inmobiliario de Monterrey. Proyecto hobby, fan-made, sin fines comerciales ni afiliación con las empresas. Los territorios son una simulación, no propiedad real ni límites oficiales.
+
+Publicado en [Railway](https://el-tablero-regio-production.up.railway.app/). Código en [GitHub](https://github.com/vazqua/el-tablero-regio).
 
 ## Arranque
 
@@ -32,8 +34,8 @@ El conjunto actual contiene 84 desarrollos ubicados y 14 desarrolladoras. No se 
 - Fichas de desarrollos y desarrolladoras enlazadas, búsqueda por nombre o municipio, ranking y leyenda.
 - Alcance de 0.5 a 2.5 veces el radio base. La geometría se calcula en un Web Worker; los cambios rápidos conservan solo la solicitud más reciente. El mapa anterior permanece visible hasta recibir el resultado.
 - Transición cruzada entre polígonos durante 320 ms; se respeta la preferencia de movimiento reducido. Las disputas son una superposición y no se contabilizan dos veces.
-- En móvil, las fichas se convierten en un panel inferior desplazable y dejan accesible el alcance. El ranking se abre desde el mapa.
-- Macondo y Nunito se cargan desde Google Fonts con `display=swap`. Iconos Lucide. Sin backend ni librerías de componentes.
+- Hasta 900 px de ancho, el ranking se abre como un panel desplazable desde el mapa. Las fichas permiten ampliar la lectura; en pantallas cortas usan automáticamente toda el área disponible. El alcance permanece visible con la ficha compacta y vuelve al cerrar la lectura ampliada. La orientación horizontal conserva todos los controles dentro de la pantalla.
+- Macondo y Nunito se sirven localmente desde Fontsource con `display=swap`, sin peticiones a Google Fonts durante la carga. Sus licencias se distribuyen en `public/fonts/`. Iconos Lucide. Sin backend ni librerías de componentes.
 
 `src/types.ts` define el esquema. `validarDatos` verifica campos, enumeraciones, IDs únicos, referencia a desarrolladora, colores, rangos y tipos numéricos. Un registro con cualquiera de las dos coordenadas nula queda pendiente y se lista en consola. Un registro mal formado impide cargar el mapa y muestra el error; no se descarta silenciosamente. La validación no verifica las afirmaciones de las descripciones ni el estado de construcción.
 
@@ -42,15 +44,15 @@ El conjunto actual contiene 84 desarrollos ubicados y 14 desarrolladoras. No se 
 - React Router conserva el mapa en `/`, el catálogo en `/desarrolladoras` y los créditos en `/creditos`. El header permanece visible; las páginas tienen desplazamiento independiente.
 - Cada tarjeta enlaza a `/?empresa=ID`. La empresa elegida conserva su color y los territorios y marcadores rivales se atenúan. Cerrar la ficha o pulsar Mapa elimina la selección. También se conserva `desarrollo=ID` al abrir una ficha individual. Las selecciones admiten recarga y navegación Atrás/Adelante.
 - El alcance, el cálculo y las coordenadas editadas en memoria se comparten entre rutas. Recargar reinicia el alcance a 1 y restaura los JSON del repositorio.
-- `src/data/proyecto.json` contiene `autor`, `github` y `linkedin`. El nombre inicial es un placeholder y los enlaces son `null`; al agregar una URL HTTPS válida, el enlace se activa. No se inventaron perfiles personales.
+- `src/data/proyecto.json` contiene el autor, David Vázquez Moreno, y sus perfiles: GitHub `@vazqua` y LinkedIn `@davidvazquezmore`. Créditos muestra su fotografía y enlaces HTTPS activos; un enlace ausente o inválido se presenta como no disponible.
 - Créditos reproduce el campo `fuente` de cada desarrollo sin convertir referencias incompletas en enlaces inventados.
 
 ## Sistema visual
 
 - `src/design/tokens.ts` es la fuente única de la paleta: las cinco familias completas y los diez alias semánticos. `tailwind.config.ts` las registra en `theme.extend.colors` y genera sus variables CSS. MapLibre consume los mismos alias desde TypeScript.
 - Tailwind 3 se integra con PostCSS y sin Preflight para conservar los estilos funcionales del mapa. Los componentes usan alias semánticos, nunca tonos de las familias directamente. `color-scheme: light` permanece fijo.
-- Macondo Regular 400 da carácter a la identidad, los titulares y las cifras de dominio, siempre desde 24 px. Nunito Bold organiza etiquetas y navegación; Nunito Regular lleva el texto y la interfaz. No se sintetiza negrita de Macondo.
-- Los colores de las Casas siguen en `src/data/desarrolladoras.json`, separados de los tokens. `crown` se usa únicamente en el distintivo del primer lugar de La Corona.
+- Macondo Regular 400 da carácter a la identidad, los titulares y las cifras de dominio. Nunito Bold organiza etiquetas y navegación; Nunito Regular lleva el texto y la interfaz. No se sintetiza negrita de Macondo.
+- Los colores de las Casas siguen en `src/data/desarrolladoras.json`, separados de los tokens. `crown` identifica la corona de la marca y el distintivo del primer lugar de La Corona.
 - `/estilo` muestra las muestras semánticas, la escala tipográfica y componentes. Se importa exclusivamente en desarrollo; no se incluye en el build público. La muestra de `crown` en esta guía es una referencia del token, no una segunda posición del ranking.
 - Los paneles usan bordes de 2-3 px y sombras sin desenfoque. Las esquinas usan `corner-shape: bevel` donde existe soporte y esquinas rectas como alternativa. Las tarjetas llevan particiones diagonales.
 - La interfaz usa Casas, Bastiones, Dominio, Tierras sin reclamar, Frontera en disputa y La Corona. Los nombres y descripciones originales de los JSON permanecen intactos.
@@ -88,9 +90,11 @@ Vitest cubre el conjunto real en los alcances 0.5, 1 y 2.5; validación de esque
 
 Se comprueban ausencia de traslapes, huecos y geometría fuera del bounding box con tolerancia de 0.01 m² en el plano del recorte; validez de las superficies; disputas fuera del suelo libre; suma del reparto a 100 %; y acuerdo con el área esférica libre con tolerancia de 0.0001 puntos porcentuales. Las tolerancias representan cálculo numérico, no precisión catastral.
 
-Playwright verifica píxeles coloreados del mapa, escritorio y móvil, ranking y leyenda, búsqueda, navegación entre fichas, hover y clic en territorios, iconos de marcadores, cambios rápidos del alcance, edición, arrastre, JSON exportado y ausencia del editor en producción.
+Playwright verifica píxeles coloreados del mapa, escritorio y móvil, La Corona y Simbología, búsqueda, navegación entre fichas con restablecimiento del desplazamiento y foco, hover y clic en territorios, iconos de marcadores, cambios rápidos del alcance, edición, arrastre, JSON exportado y ausencia del editor en producción.
 
 También verifica las tarjetas contra los JSON, selección desde el catálogo, atenuación real de los polígonos mediante píxeles y de los marcadores mediante opacidad, URLs compartibles, Atrás/Adelante, alcance compartido, navegación con teclado, créditos, referencias, rutas desconocidas y entrada directa con recarga en el build de producción.
+
+La matriz táctil adicional cubre 320×568, 390×844, 844×390, 568×320, 768×1024 y una ventana reducida de 390×420: alcance con gesto táctil, controles sin solaparse, desplazamiento del ranking, búsqueda, expansión y cierre de fichas, foco y rotación. También se verifican las fuentes locales y el aviso cuando fallan las teselas. Son pruebas de navegador emulado, no sustituyen una revisión en Safari y Android físicos. Los ajustes móviles se concentran en `src/mobile.css`, cargado después del sistema visual.
 
 ## Escudos de las Casas
 
@@ -108,15 +112,35 @@ import { Escudo, Estandarte } from './components/escudo/Escudo';
 
 En `src/components/escudo/`, `blasones.ts` asigna particiones, figuras y lemas; `siluetas.ts`, `particiones.ts` y `figuras.ts` definen el vocabulario cerrado. `tintas.ts` elige argén o sable por contraste con el color original del JSON. Las figuras que cruzan una partición cambian de tinta para conservar el contraste.
 
+Cada blasón conserva `lemaOriginal` en español, `lemaLatin` y `lemaTraduccion`. La interfaz muestra el latín con su traducción de apoyo; el armorial también conserva el original. Las equivalencias y notas están en [Lemas latinos](docs/lemas-latinos.md).
+
 Los estandartes del mapa se anclan al centro de masa del componente territorial más grande. Si ese centro cae en un hueco o fuera de un campo cóncavo, se usa el Bastión interior más cercano. La entrada dura 150 ms y respeta movimiento reducido. Los marcadores de Bastiones conservan sus iconos por tipo.
 
 Las pruebas cubren correspondencia con las 14 Casas, combinaciones únicas, tintas, IDs de recorte independientes, escalas, píxeles renderizados, anclaje del hover y exclusión del armorial en producción.
 
-## Sitio estático
+## Imágenes de castillos
 
-`pnpm build` genera `dist/`, listo para un hosting estático. En Vercel: preset Vite, comando `pnpm build`, directorio de salida `dist`. En Netlify: comando `pnpm build` y directorio de publicación `dist`. No se ha publicado el proyecto.
+Los 14 PNG originales se conservan en `src/components/castillos/` como fuentes de edición. La aplicación importa únicamente las variantes WebP de `optimized/`: 160, 384, 768 y 1280 píxeles de ancho. Los tooltips usan la variante de 160 px; las fichas y el catálogo usan `srcset` y `sizes` para que el navegador elija según el espacio disponible y la densidad de pantalla. Se mantiene la imagen completa y el recorte octagonal de la interfaz.
 
-Se incluyen `vercel.json` y `public/_redirects` para servir la SPA al abrir o recargar sus rutas. Vite copia `_redirects` a `dist`. Configuración basada en [Vite en Vercel](https://vercel.com/docs/frameworks/frontend/vite) y [SPAs en Netlify](https://docs.netlify.com/build/configure-builds/javascript-spas/). Las pruebas locales verifican entrada directa y recarga sobre el build; no sustituyen una comprobación del hosting una vez publicado.
+Las 56 variantes suman aproximadamente 2.47 MB frente a 55.68 MB de los originales. Cada imagen descarga solo la variante seleccionada, no todas. Las variantes se incluyen en Git; después de cambiar un original o añadir una Casa, regenerarlas con:
+
+```sh
+pnpm images:castillos
+pnpm build
+pnpm test:e2e
+```
+
+Sharp se usa exclusivamente como herramienta de desarrollo. No se procesan imágenes en Railway ni en cada petición del usuario. El build no incluye los PNG originales.
+
+## Publicación en Railway
+
+El sitio está publicado en Railway y vinculado a la rama `main` del repositorio de GitHub. `pnpm build` genera `dist/`; Railway debe servir ese directorio como sitio estático, no ejecutar el servidor de desarrollo. No hay backend de aplicación.
+
+Railpack detecta aplicaciones Vite y puede servirlas con Caddy. Si la detección no configura la salida SPA, la variable `RAILPACK_SPA_OUTPUT_DIR=dist` permite indicarla explícitamente. Las rutas que no corresponden a archivos deben resolver a `index.html`, para poder abrir y recargar `/desarrolladoras` y `/creditos`. Referencias: [Node en Railpack](https://railpack.com/languages/node/) y [rutas SPA en Railway](https://docs.railway.com/guides/spa-routing-configuration).
+
+La conexión con GitHub, el despliegue automático y los dominios se administran en Railway; no se configuran desde este repositorio. Después de un push a `main`, comprobar que el despliegue usa el commit nuevo. Si el despliegue automático está desactivado, desplegar el último commit desde Railway; volver a desplegar una versión anterior no incorpora los cambios nuevos.
+
+Se conservan `vercel.json` y `public/_redirects` como alternativas para otros proveedores; no configuran Railway. Las pruebas locales verifican entrada directa y recarga del build. Tras publicar, comprobar también las rutas, el favicon y las imágenes en la URL pública; esas pruebas locales no sustituyen la verificación del hosting.
 
 El mapa usa teselas raster de OpenStreetMap con atribución visible y sin API key. Los JSON y la geometría son locales; el fondo cartográfico requiere conexión. Si fallan las teselas, se mantiene el fondo local con los territorios y se muestra un aviso. Antes de un despliegue con tráfico alto, revisar las condiciones del proveedor de teselas.
 

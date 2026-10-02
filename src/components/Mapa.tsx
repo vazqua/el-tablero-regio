@@ -65,7 +65,7 @@ export default function Mapa(props: Props) {
             { id: 'base', type: 'raster', source: 'base', paint: { 'raster-saturation': -1, 'raster-contrast': -0.15, 'raster-brightness-min': 0.22, 'raster-opacity': 0.88 } },
           ],
         },
-        center: [-100.30, 25.75], zoom: window.innerWidth < 700 ? 9.75 : 10.55,
+        center: [-100.30, 25.75], zoom: window.innerWidth <= 900 ? 9.75 : 10.55,
         minZoom: 8, maxZoom: 18, maxBounds: [[-101.1, 25.15], [-99.6, 26.35]],
         canvasContextAttributes: { preserveDrawingBuffer: true },
         locale: { 'Map.Title': 'Mapa de dominios de Monterrey', 'AttributionControl.ToggleAttribution': 'Créditos del mapa' },

@@ -65,8 +65,14 @@ test('alcance compartido, navegación con teclado y créditos', async ({ page })
   await nav.getByRole('link', { name: 'Créditos', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Créditos', exact: true })).toBeFocused();
   await expect(page.locator('.disclaimer')).toContainText('Sin afiliación');
-  await expect(page.locator('.personal-links [aria-disabled="true"]')).toHaveCount(2);
-  await expect(page.locator('.stack-list li')).toHaveCount(7);
+  await expect(page).toHaveTitle('Créditos | El Tablero Regio');
+  await expect(page.locator('.personal-links [aria-disabled="true"]')).toHaveCount(0);
+  await expect(page.locator('.personal-links a')).toHaveCount(2);
+  await expect(page.locator('.personal-links').getByRole('link', { name: 'GitHub @vazqua' })).toHaveAttribute('href', 'https://github.com/vazqua');
+  await expect(page.locator('.personal-links').getByRole('link', { name: 'LinkedIn @davidvazquezmore' })).toHaveAttribute('href', 'https://www.linkedin.com/in/davidvazquezmore');
+  await expect(page.locator('.stack-list li')).toHaveCount(9);
+  await expect(page.locator('.stack-list')).toContainText('Railway');
+  await expect(page.locator('.stack-list')).toContainText('Google Fonts');
   await page.screenshot({ path: 'test-results/creditos-' + test.info().project.name + '.png', animations: 'disabled' });
   await page.locator('summary').click();
   await expect(page.locator('.source-list li')).toHaveCount(datos.length);
@@ -74,6 +80,7 @@ test('alcance compartido, navegación con teclado y créditos', async ({ page })
   await nav.getByRole('link', { name: 'Mapa', exact: true }).focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('slider')).toHaveValue('1.5');
+  await expect(page).toHaveTitle('Mapa | El Tablero Regio');
   await expect(page.locator('.mapa')).toHaveAttribute('data-rendered', 'true', { timeout: 30000 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
@@ -93,6 +100,7 @@ test('producción: entrada directa y recarga en ambas páginas', async ({ page }
   for (const [ruta, nombre] of [['/desarrolladoras', 'Casas'], ['/creditos', 'Créditos']]) {
     await page.goto(new URL(ruta, process.env.E2E_PROD_URL ?? 'http://127.0.0.1:5174').href, { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: nombre, exact: true })).toBeVisible();
+    await expect(page).toHaveTitle(nombre + ' | El Tablero Regio');
     await page.reload({ waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('heading', { name: nombre, exact: true })).toBeVisible();
   }

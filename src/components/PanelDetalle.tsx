@@ -1,5 +1,5 @@
-import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin, X, Crosshair } from 'lucide-react';
-import { useEffect, useRef, type CSSProperties } from 'react';
+import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin, X, Crosshair, Maximize2, Minimize2 } from 'lucide-react';
+import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Desarrollo, Desarrolladora, ResultadoTerritorios } from '../types';
 import IconoTipo from './IconoTipo';
 import IconoBastion from './IconoBastion';
@@ -16,19 +16,27 @@ interface Props {
 }
 export default function PanelDetalle({ seleccion, desarrollos, empresas, resultado, onSelect, onClose, onLocate }: Props) {
   const titulo = useRef<HTMLHeadingElement>(null);
-  useEffect(() => { titulo.current?.focus({ preventScroll: true }); }, [seleccion.tipo, seleccion.id]);
+  const contenido = useRef<HTMLDivElement>(null);
+  const [ampliado, setAmpliado] = useState(false);
+  useLayoutEffect(() => {
+    if (contenido.current) contenido.current.scrollTop = 0;
+    titulo.current?.focus({ preventScroll: true });
+  }, [seleccion.tipo, seleccion.id]);
   const desarrollo = seleccion.tipo === 'desarrollo' ? desarrollos.find(d => d.id === seleccion.id) : null;
   const empresa = empresas.find(e => e.id === (desarrollo?.desarrolladora ?? seleccion.id));
   if (!empresa) return null;
   const propios = desarrollos.filter(d => d.desarrolladora === empresa.id);
   const area = resultado?.territorios.features.find(f => f.properties.desarrolladora === empresa.id)?.properties.areaM2 ?? 0;
-  return <aside className="detail-sheet" aria-label={desarrollo ? 'Ficha del Bastión' : 'Ficha de la Casa'} style={{ '--faction': empresa.color } as CSSProperties}>
+  return <aside className={'detail-sheet' + (ampliado ? ' is-expanded' : '')} aria-label={desarrollo ? 'Ficha del Bastión' : 'Ficha de la Casa'} style={{ '--faction': empresa.color } as CSSProperties}>
     <div className="sheet-handle" />
     <div className="detail-top">
       <span className="eyebrow">{desarrollo ? 'EXPEDIENTE DEL BASTIÓN' : 'LA CASA'}</span>
-      <button className="icon-button" title="Cerrar detalle" aria-label="Cerrar detalle" onClick={onClose}><X size={20} /></button>
+      <div className="detail-actions">
+        <button className="icon-button mobile-only" title={ampliado ? 'Reducir ficha' : 'Ampliar ficha'} aria-label={ampliado ? 'Reducir ficha' : 'Ampliar ficha'} aria-expanded={ampliado} aria-controls="detalle-contenido" onClick={() => setAmpliado(!ampliado)}>{ampliado ? <Minimize2 size={20} /> : <Maximize2 size={20} />}</button>
+        <button className="icon-button" title="Cerrar detalle" aria-label="Cerrar detalle" onClick={onClose}><X size={20} /></button>
+      </div>
     </div>
-    <div className="detail-scroll">
+    <div id="detalle-contenido" className="detail-scroll" ref={contenido}>
       <div className="detail-banner">
         {desarrollo ? <span className="detail-emblem"><IconoTipo tipo={desarrollo.tipo} size={32} /></span> : <span className="detail-crest"><Escudo casaId={empresa.id} size={200} /></span>}
         <span className="category-tag">{desarrollo ? NOMBRES_TIPO[desarrollo.tipo] : propios.length + ' Bastiones'}</span>

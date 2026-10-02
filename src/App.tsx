@@ -12,8 +12,8 @@ function Contenido() {
   const { desarrollos, inicial } = useDominio();
   const { pathname, search } = useLocation();
   useEffect(() => {
-    const pagina = pathname === '/' ? 'El tablero regio' : pathname === '/desarrolladoras' ? 'Casas' : pathname === '/creditos' ? 'Créditos' : import.meta.env.DEV && pathname === '/estilo' ? 'Sistema de diseño' : import.meta.env.DEV && pathname === '/escudos' ? 'Los escudos' : 'Página no encontrada';
-    document.title = pagina + ' | Dominio MTY';
+    const pagina = pathname === '/' ? 'Mapa' : pathname === '/desarrolladoras' ? 'Casas' : pathname === '/creditos' ? 'Créditos' : import.meta.env.DEV && pathname === '/estilo' ? 'Sistema de diseño' : import.meta.env.DEV && pathname === '/escudos' ? 'Los escudos' : 'Página no encontrada';
+    document.title = pagina + ' | El Tablero Regio';
     if (pathname !== '/') document.querySelector<HTMLElement>('.page-title')?.focus({ preventScroll: true });
   }, [pathname]);
   const editando = import.meta.env.DEV && pathname === '/' && new URLSearchParams(search).get('edit') === '1';

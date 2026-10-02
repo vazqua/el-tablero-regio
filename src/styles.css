@@ -100,7 +100,7 @@ input[type="range"]::-moz-range-thumb { height: 20px; width: 14px; border: 2px s
 .mapa[data-zoom="far"] .development-marker svg { width: 12px; height: 12px; }
 .development-marker:hover, .development-marker:focus-visible, .development-marker.is-selected { background: var(--marker-color); z-index: 5; outline: 3px solid var(--color-bg); outline-offset: 2px; }
 .territory-tooltip { pointer-events: none; max-width: 250px !important; }
-.territory-tooltip .maplibregl-popup-content { border: 2px solid var(--color-border); border-radius: 0; box-shadow: 3px 3px 0 var(--color-border); background: var(--color-surface); padding: 12px 15px; }
+.territory-tooltip .maplibregl-popup-content { pointer-events: none; border: 2px solid var(--color-border); border-radius: 0; box-shadow: 3px 3px 0 var(--color-border); background: var(--color-surface); padding: 12px 15px; }
 .territory-tooltip strong { display: block; font: 700 21px var(--font-title); }
 .territory-tooltip span { display: block; font: 11px var(--font-body); margin-top: 3px; color: var(--color-ink-soft); }
 .territory-tooltip .maplibregl-popup-tip { display: none; }

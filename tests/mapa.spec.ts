@@ -9,7 +9,7 @@ async function listo(page: Page) {
   await expect(page.locator('.mapa')).toHaveAttribute('data-rendered', 'true', { timeout: 30000 });
 }
 async function abrirRanking(page: Page) {
-  if (test.info().project.name === 'movil') await page.getByRole('button', { name: 'Abrir La Corona y leyenda' }).click();
+  if (test.info().project.name === 'movil') await page.getByRole('button', { name: 'Abrir La Corona y simbología' }).click();
 }
 async function cerrarRanking(page: Page) {
   if (test.info().project.name === 'movil') await page.getByRole('button', { name: 'Cerrar La Corona' }).click();
@@ -41,9 +41,9 @@ test('datos reales: tablero, ranking, leyenda, fichas y búsqueda', async ({ pag
   const libre = parseFloat((await page.locator('.free-territory strong').textContent())!);
   expect(valores.reduce((a, b) => a + b, libre)).toBeCloseTo(100, 0);
   expect(valores).toEqual([...valores].sort((a, b) => b - a));
-  await page.getByRole('tab', { name: 'Leyenda' }).click();
+  await page.getByRole('tab', { name: 'Simbología' }).click();
   await expect(page.locator('.legend-companies button')).toHaveCount(empresas.length);
-  await expect(page.getByRole('tabpanel', { name: 'Leyenda del mapa' }).getByText('Frontera en disputa', { exact: true })).toBeVisible();
+  await expect(page.getByRole('tabpanel', { name: 'Simbología' }).getByText('Frontera en disputa', { exact: true })).toBeVisible();
   await page.getByRole('tab', { name: 'La Corona' }).click();
   await page.locator('.rank-row').first().click();
   await expect(page.getByRole('complementary', { name: 'Ficha de la Casa' })).toBeVisible();
@@ -66,6 +66,32 @@ test('datos reales: tablero, ranking, leyenda, fichas y búsqueda', async ({ pag
   await page.getByRole('button', { name: 'Mostrar Bastiones' }).click();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(errores).toEqual([]);
+});
+
+test('fichas: cambiar de Bastión a Casa y volver restablece el desplazamiento', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await listo(page);
+  await page.getByRole('textbox', { name: 'Buscar Bastión' }).fill(datos[0].nombre);
+  await page.locator('.search-results button').first().click();
+  const scroll = page.locator('.detail-scroll');
+  await scroll.evaluate(n => { n.scrollTop = n.scrollHeight; });
+  await page.locator('.company-link').click();
+  const casa = page.getByRole('complementary', { name: 'Ficha de la Casa' });
+  await expect(casa).toBeVisible();
+  await expect(casa.getByRole('heading', { level: 2 })).toBeFocused();
+  await expect(casa.getByRole('heading', { level: 2 })).toBeInViewport();
+  expect(await scroll.evaluate(n => n.scrollTop)).toBe(0);
+  await page.screenshot({ path: 'test-results/detail-navigation-' + test.info().project.name + '.png' });
+  await page.locator('.developments-list button').last().click();
+  const bastion = page.getByRole('complementary', { name: 'Ficha del Bastión' });
+  await expect(bastion).toBeVisible();
+  await expect(bastion.getByRole('heading', { level: 2 })).toBeInViewport();
+  expect(await scroll.evaluate(n => n.scrollTop)).toBe(0);
+  await scroll.evaluate(n => { n.scrollTop = n.scrollHeight; });
+  await page.goBack();
+  await expect(casa).toBeVisible();
+  await expect(casa.getByRole('heading', { level: 2 })).toBeInViewport();
+  expect(await scroll.evaluate(n => n.scrollTop)).toBe(0);
 });
 
 test('alcance en vivo: extremos, cambios rápidos y porcentajes actualizados', async ({ page }) => {
@@ -121,6 +147,9 @@ test('editor: ubicar, arrastrar y exportar sin modificar otros registros', async
   await page.getByRole('button', { name: 'Ubicar en el centro' }).click();
   const marcador = page.getByRole('button', { name: datos[0].nombre + ', confirmado', exact: true });
   await expect(marcador).toBeVisible();
+  await listo(page);
+  await marcador.hover();
+  await expect(page.locator('.territory-tooltip .maplibregl-popup-content')).toHaveCSS('pointer-events', 'none');
   const caja = (await marcador.boundingBox())!;
   await page.mouse.move(caja.x + caja.width / 2, caja.y + caja.height / 2);
   await page.mouse.down();

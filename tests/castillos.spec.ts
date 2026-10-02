@@ -11,9 +11,11 @@ test('castillos: las 14 Casas conservan su escudo y muestran su imagen completa'
   for (const casa of casas) {
     const imagen = page.locator(`.company-card .castillo[data-casa="${casa.id}"]`);
     await imagen.scrollIntoViewIfNeeded();
-    await expect(imagen).toHaveAttribute('src', new RegExp('/' + casa.id + '\\.png'));
+    await expect(imagen).toHaveAttribute('src', new RegExp('/' + casa.id + '-384\\.webp'));
+    await expect(imagen).toHaveAttribute('srcset', /384w, .*768w, .*1280w/);
     await expect.poll(() => imagen.evaluate((n: HTMLImageElement) => n.complete && n.naturalWidth > 0)).toBe(true);
     await expect(imagen).toHaveCSS('object-fit', 'contain');
+    expect(await imagen.evaluate((n: HTMLImageElement) => n.currentSrc)).toMatch(/-(384|768|1280)\.webp/);
   }
   await page.locator('.company-card').first().evaluate(n => n.scrollIntoView({ block: 'start' }));
   await page.screenshot({ path: 'test-results/castillos-catalogo-' + test.info().project.name + '.png' });
@@ -38,10 +40,12 @@ test('castillos: el tooltip distingue Bastiones de la misma Casa sin sustituir b
   for (const bastion of muestra) {
     await page.getByRole('button', { name: 'Ver ' + bastion.nombre, exact: true }).hover();
     const tooltip = page.getByRole('tooltip');
+    await expect(tooltip).toHaveCSS('pointer-events', 'none');
     await expect(tooltip.locator('strong')).toHaveText(bastion.nombre);
     await expect(tooltip.locator('.tooltip-casa')).toHaveText('GM Desarrollos');
     await expect(tooltip.locator('.castillo')).toHaveAttribute('data-casa', 'gm-desarrollos');
-    await expect.poll(() => tooltip.locator('.castillo').evaluate((n: HTMLImageElement) => n.complete && n.naturalWidth > 0)).toBe(true);
+    await expect(tooltip.locator('.castillo')).toHaveAttribute('src', /gm-desarrollos-160\.webp/);
+    await expect.poll(() => tooltip.locator('.castillo').evaluate((n: HTMLImageElement) => n.complete && n.naturalWidth === 160)).toBe(true);
     await expect(tooltip.locator('.estandarte')).toHaveCount(0);
     await expect(page.locator('.territory-standard')).toHaveCount(1);
     await expect(page.locator('.bastion-standard')).toHaveCount(2);
@@ -49,4 +53,17 @@ test('castillos: el tooltip distingue Bastiones de la misma Casa sin sustituir b
   await page.screenshot({ path: 'test-results/castillos-tooltip-' + test.info().project.name + '.png' });
   await page.mouse.move(5, 5);
   await expect(page.getByRole('tooltip')).toHaveCount(0);
+});
+
+test.describe('castillos en pantallas de alta densidad', () => {
+  test.use({ deviceScaleFactor: 2 });
+
+  test('producción carga WebP responsivo en lugar del original', async ({ page }) => {
+    await page.goto(new URL('/desarrolladoras', process.env.E2E_PROD_URL ?? 'http://127.0.0.1:5174').href, { waitUntil: 'domcontentloaded' });
+    const imagen = page.locator('.company-card .castillo').first();
+    await imagen.scrollIntoViewIfNeeded();
+    await expect.poll(() => imagen.evaluate((n: HTMLImageElement) => n.complete && n.naturalWidth > 0)).toBe(true);
+    expect(await imagen.evaluate((n: HTMLImageElement) => n.currentSrc)).toMatch(/gm-desarrollos-768-[^/]+\.webp$/);
+    await page.screenshot({ path: 'test-results/castillos-dpr2-' + test.info().project.name + '.png' });
+  });
 });
