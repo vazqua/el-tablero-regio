@@ -130,7 +130,8 @@ input[type="range"]::-moz-range-thumb { background: var(--color-highlight); bord
 .author-line dd { font: 400 26px/1.2 var(--font-display); }
 .stack-list li, .source-list li { border-color: var(--color-border); }
 .text-link:hover, .personal-links a:hover { color: var(--color-highlight); }
-.credits-columns { padding-top: 36px; }
+.credits-inner .page-heading { padding: 20px 0 14px; }
+.credits-columns { padding-top: 26px; }
 .source-section summary { font: 400 25px/1.2 var(--font-display); }
 .not-found .page-title { font-size: 48px; }
 @supports (corner-shape: bevel) {
@@ -185,7 +186,8 @@ input[type="range"]::-moz-range-thumb { background: var(--color-highlight); bord
   .company-card { padding: 0 20px; }
   .company-card-top { margin: 0 -20px 21px; padding: 17px 20px; }
   .company-card h3.house-name { font-size: 31px; }
-  .credits-columns { padding-top: 27px; }
+  .credits-inner .page-heading { padding: 16px 0 10px; }
+  .credits-columns { padding-top: 20px; }
   .credit-section h3 { font-size: 29px; }
   .credits-columns > div:first-child > .credit-section:first-child > h3 { font-size: 28px; }
 }

@@ -50,8 +50,11 @@
 .company-projects li::marker { color: var(--faction); }
 .company-card-action { margin-top: auto; border-top: 2px solid var(--color-border); padding: 15px 0; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; }
 .page-warning { padding: 13px 0; color: var(--color-ink-soft); font-size: 12px; }
-.credits-inner { max-width: 1120px; }
-.brand-mark.credits-brand-mark { width: 64px; height: 70px; margin-right: 20px; border-color: var(--color-bg); }
+.credits-inner { max-width: 1280px; }
+.credits-inner .page-heading { padding: 20px 0 14px; }
+.credits-inner .page-title { margin: 2px 0 0; }
+.brand-mark.credits-brand-mark { width: 82px; height: 88px; margin-right: 20px; border-color: var(--color-bg); }
+.credits-brand-mark svg { width: 50px; height: 50px; }
 .credits-columns { display: grid; grid-template-columns: 1.12fr 1fr; gap: 70px; padding-top: 34px; }
 .credit-section { padding-bottom: 30px; margin-bottom: 30px; border-bottom: 2px solid var(--color-border); }
 .credits-columns > div > .credit-section:last-child { margin-bottom: 0; border-bottom: 0; }
@@ -68,7 +71,8 @@
 .author-portrait { width: 112px; height: 112px; flex: 0 0 112px; object-fit: cover; clip-path: polygon(12% 0, 88% 0, 100% 12%, 100% 88%, 88% 100%, 12% 100%, 0 88%, 0 12%); }
 .author-profile .author-line { min-width: 0; margin: 0; }
 .disclaimer-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-.disclaimer-heading > svg { flex: 0 0 auto; color: var(--color-highlight); }
+.disclaimer-heading > svg { flex: 0 0 auto; color: var(--color-ink); }
+.disclaimer-heading .dragon-alert-icon { width: 28px; height: 28px; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .disclaimer-heading h3 { margin: 0; }
 .disclaimer strong { color: var(--color-ink); }
 .text-link { display: inline-flex; gap: 7px; align-items: center; font-size: 12px; text-underline-offset: 4px; margin: 0 0 16px; }
@@ -111,7 +115,7 @@
   .company-card { padding: 20px 20px 0; }
   .company-story { font-size: 13px; }
   .credits-columns { grid-template-columns: 1fr; gap: 0; padding-top: 26px; }
-  .brand-mark.credits-brand-mark { width: 42px; height: 46px; margin: 2px 0 0; }
+  .brand-mark.credits-brand-mark { width: 52px; height: 56px; margin: 2px 0 0; }
   .credits-brand-mark svg { width: 25px; }
   .source-list li { grid-template-columns: 1fr; gap: 3px; }
   .source-section summary { font-size: 24px; }

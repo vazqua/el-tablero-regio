@@ -13,7 +13,7 @@ export default function Desarrolladoras() {
   return <main className="content-page">
     <div className="page-inner">
       <header className="page-heading">
-        <div><span className="eyebrow">Conoce a los que mandan</span><h2 className="page-title" tabIndex={-1}>Casas</h2><p>Monterrey no se construyó sola. Se repartió.</p></div>
+        <div><span className="eyebrow">Conoce a los que mandan</span><h2 className="page-title" tabIndex={-1}>Casas</h2></div>
         <div className="catalog-summary"><strong>{inicial.desarrolladoras.length}<span>CASAS EN JUEGO</span></strong><span className="scope-label"><Target size={15} />Alcance {factorAplicado.toFixed(2).replace(/0$/, '')}×</span></div>
       </header>
       <details className="catalog-method">
